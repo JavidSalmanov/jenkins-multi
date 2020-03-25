@@ -57,32 +57,24 @@ pipeline {
             }
         }
         stage('Deploy - PROD') {
+
+            when {
+                anyOf {
+                    expression { params.deployPROD == 'yes' };
+                    branch "feature/*"
+                    // not {
+                    // branch 'master'
+                    // }
+                }
+           // beforeAgent true
+            }
             when {
                 not {
-                    branch 'master'
+                    anyOf {
+                        branch 'master';
+                        branch 'staging'
+                    }
                 }
-            }
-            when {
-                expression { params.deployPROD == 'yes' }
-            }
-        //     when {
-        //         anyOf {
-        //             expression { params.deployPROD == 'yes' };
-        //             branch "feature/*"
-        //             // not {
-        //             // branch 'master'
-        //             // }
-        //         }
-        //    // beforeAgent true
-        //     }
-            when {
-                branch 'staging'
-                // not {
-                //     anyOf {
-                //         branch "feature/*"
-                //         branch 'staging'
-                //     }
-                // }
             }
             steps {
                 input "Deploy to prod?"
