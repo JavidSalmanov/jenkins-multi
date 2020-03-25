@@ -68,14 +68,6 @@ pipeline {
                 }
            // beforeAgent true
             }
-            when {
-                not {
-                    anyOf {
-                        branch 'master';
-                        branch 'staging'
-                    }
-                }
-            }
             steps {
                 input "Deploy to prod?"
                 echo 'Production!!!'
