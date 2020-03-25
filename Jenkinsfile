@@ -61,12 +61,8 @@ pipeline {
             when {
                 anyOf {
                     expression { params.deployPROD == 'yes' };
-                    branch "feature/*"
-                    // not {
-                    // branch 'master'
-                    // }
+                    branch "release/*"
                 }
-           // beforeAgent true
             }
             steps {
                 input "Deploy to prod?"
