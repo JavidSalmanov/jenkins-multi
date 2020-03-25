@@ -76,12 +76,13 @@ pipeline {
         //    // beforeAgent true
         //     }
             when {
-                not {
-                    anyOf {
-                        branch "feature/*";
-                        branch 'staging'
-                    }
-                }
+                branch 'staging'
+                // not {
+                //     anyOf {
+                //         branch "feature/*"
+                //         branch 'staging'
+                //     }
+                // }
             }
             steps {
                 input "Deploy to prod?"
