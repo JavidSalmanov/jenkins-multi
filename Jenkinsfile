@@ -66,12 +66,10 @@ pipeline {
                 expression { params.deployPROD == 'yes' }
             }
             steps {
-                if (env.BRANCH_NAME != 'master'){
                 input "Deploy to prod?"
                 echo 'Production!!!'
                 echo 'deploy to PROD'
                 echo "${params.version}"
-                }
             }
         }
     }
