@@ -58,6 +58,11 @@ pipeline {
         }
         stage('Deploy - PROD') {
             when {
+                not {
+                    branch 'master'
+                }
+            }
+            when {
                 expression { params.deployPROD == 'yes' }
             }
             steps {
