@@ -67,7 +67,7 @@ pipeline {
             }
             when {
                 anyOf {
-                    expression { params.deployPROD == 'yes' }
+                    expression { params.deployPROD == 'yes' };
                     branch "feature/*"
                     // not {
                     // branch 'master'
