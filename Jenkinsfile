@@ -62,13 +62,14 @@ pipeline {
             }
         }
         stage('Deploy - PROD') {
+            when { branch "feature/*" }
 
-            when {
-                anyOf {
-                    expression { params.deployPROD == 'yes' };
-                    expression { return $BRANCH_NAME == "release/1.2" }
-                }
-            }
+            // when {
+            //     anyOf {
+            //         expression { params.deployPROD == 'yes' };
+            //         expression { return env.BRANCH_NAME == "release/1.2" }
+            //     }
+            // }
             steps {
                 input "Deploy to prod?"
                 echo 'Production!!!'
