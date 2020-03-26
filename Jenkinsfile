@@ -40,8 +40,10 @@ pipeline {
 
         stage('Deploy - QA') {
             when {
-                expression { params.deployQA == 'yes' }
-                expression {  "${env.GIT_TAG_NAME}".startsWith('v/') };
+                anyOf {
+                    expression { params.deployQA == 'yes' }
+                    expression {  "${env.GIT_TAG_NAME}".startsWith('v/') };
+                }
             }
             steps {
                 echo 'deploy to QA'
