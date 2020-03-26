@@ -62,7 +62,7 @@ pipeline {
             }
         }
         stage('Deploy - PROD') {
-            when { branch "feature/*" }
+            when { branch "release/*" }
 
             // when {
             //     anyOf {
