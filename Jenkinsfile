@@ -65,7 +65,7 @@ pipeline {
             when {
                 anyOf {
                     expression { params.deployPROD == 'yes' };
-                    expression { params.branchName == "release/1.2" }
+                    expression { params.branchName == "release/*" }
                 }
             }
             steps {
