@@ -21,14 +21,14 @@ pipeline {
     }
     stages {
 
-        stage('Source') {
-            when {
-                expression { params.build == 'yes' }
-            }
-            steps {
-                echo 'Get repo'
-            }
-        }
+        // stage('Source') {
+        //     when {
+        //         expression { params.build == 'yes' }
+        //     }
+        //     steps {
+        //         echo 'Get repo'
+        //     }
+        // }
         
         stage('Build') {
             when {
@@ -56,6 +56,8 @@ pipeline {
             steps {
                 echo 'deploy to QA'
                 echo "Branch name is: ${branch}"
+                echo "BUILD_NUMBER: ${BUILD_NUMBER}"
+                echo "BRANCH_NAME: ${BRANCH_NAME}"
             }
         }
         stage('Deploy - PROD') {
