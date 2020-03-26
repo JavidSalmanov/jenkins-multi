@@ -1,11 +1,10 @@
-//comment
-def branch = "${BRANCH_NAME}"
 pipeline {
     agent {
         label ''
     }
     parameters {
         string(name: 'version', defaultValue: "${currentBuild.number}", description: 'Docker version to deploy')
+        string(name: 'branch', defaultValue: "${BRANCH_NAME}", description: 'Branch name')
         choice(
             choices: ['yes', 'no'],
             description: 'Build app and docker image',
@@ -62,15 +61,13 @@ pipeline {
             }
         }
         stage('Deploy - PROD') {
+  
             when {
-                branch 'release/1.2'  
+                anyOf {
+                    expression { params.deployPROD == 'yes' };
+                    expression { params.branch == "release/1.2" }
+                }
             }
-            // when {
-            //     anyOf {
-            //         expression { params.deployPROD == 'yes' };
-            //         expression { return env.BRANCH_NAME == "release/1.2" }
-            //     }
-            // }
             steps {
                 input "Deploy to prod?"
                 echo 'Production!!!'
