@@ -47,7 +47,6 @@ pipeline {
             }
             steps {
                 echo 'deploy to QA'
-                echo "Branch name: ${params.branchName}"
                 echo "BRANCH_NAME var: ${BRANCH_NAME}"
             }
         }
