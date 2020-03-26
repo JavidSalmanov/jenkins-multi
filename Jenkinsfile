@@ -65,7 +65,7 @@ pipeline {
 
                 // anyOf {
                 //     expression { params.deployPROD == 'yes' };
-                //     // $BRANCH_NAME == "release/*"
+                //     $BRANCH_NAME == "release/*"
                 // }
             }
             steps {
