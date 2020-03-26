@@ -62,7 +62,9 @@ pipeline {
             }
         }
         stage('Deploy - PROD') {
-            when { branch "release/*" }
+            when {
+                branch 'release/1.2'  
+            }
             // when {
             //     anyOf {
             //         expression { params.deployPROD == 'yes' };
