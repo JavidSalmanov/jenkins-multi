@@ -67,7 +67,7 @@ pipeline {
                 anyOf {
                     expression { params.deployPROD == 'yes' };
                     expression { 
-                      return ${BRANCH_NAME} == "release/*"
+                      return ${BRANCH_NAME} == "release1.2*"
                     }
                 }
             }
