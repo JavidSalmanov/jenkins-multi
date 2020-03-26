@@ -1,5 +1,5 @@
 //comment
-def branch = env.BRANCH_NAME
+def branch = "${BRANCH_NAME}"
 pipeline {
     agent {
         label ''
@@ -67,7 +67,8 @@ pipeline {
 
                 anyOf {
                     expression { params.deployPROD == 'yes' };
-                    ${BRANCH_NAME} == "release/*"
+                    expression { $branch == "release/*"}
+                    // ${BRANCH_NAME} == "release/*"
                 }
             }
             steps {
