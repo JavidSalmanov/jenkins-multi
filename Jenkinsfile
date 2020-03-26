@@ -42,7 +42,7 @@ pipeline {
             when {
                 anyOf {
                     expression { params.deployQA == 'yes' }
-                    expression {  "${env.GIT_TAG_NAME}".startsWith('*') };
+                    expression {  "${env.GIT_TAG_NAME}".contains('*') };
                 }
             }
             steps {
