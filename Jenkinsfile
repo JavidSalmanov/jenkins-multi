@@ -62,7 +62,7 @@ pipeline {
             when {
                 anyOf {
                     expression { params.deployPROD == 'yes' };
-                    expression { $p =~ params.branchName }
+                    expression { "${p}" =~ params.branchName }
                 }
             }
             steps {
