@@ -63,7 +63,6 @@ pipeline {
         }
         stage('Deploy - PROD') {
             when { branch "release/*" }
-
             // when {
             //     anyOf {
             //         expression { params.deployPROD == 'yes' };
