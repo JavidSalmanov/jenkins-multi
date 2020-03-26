@@ -61,10 +61,12 @@ pipeline {
         stage('Deploy - PROD') {
 
             when {
-                anyOf {
-                    expression { params.deployPROD == 'yes' };
-                    $BRANCH_NAME == "release/*"
-                }
+                expression { params.deployPROD == 'yes' };
+
+                // anyOf {
+                //     expression { params.deployPROD == 'yes' };
+                //     // $BRANCH_NAME == "release/*"
+                // }
             }
             steps {
                 input "Deploy to prod?"
