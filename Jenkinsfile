@@ -64,7 +64,8 @@ pipeline {
             when {
                 anyOf {
                     expression { params.deployPROD == 'yes' };
-                    expression { branch pattern: "release\/*", comparator: "REGEXP") } 
+                    expression { "${BRANCH_NAME}".startsWith('release') }
+                    // expression { branch pattern: "release\/*", comparator: "REGEXP") } 
                 }
             }
             steps {
