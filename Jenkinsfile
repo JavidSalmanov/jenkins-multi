@@ -56,6 +56,7 @@ pipeline {
             steps {
                 echo 'deploy to QA'
                 echo "Branch name is: ${branch}"
+                echo "{BUILD_NUMBER}: ${BUILD_NUMBER}"
                 echo "BUILD_NUMBER: ${BUILD_NUMBER}"
                 echo "BRANCH_NAME: ${BRANCH_NAME}"
             }
@@ -63,12 +64,10 @@ pipeline {
         stage('Deploy - PROD') {
 
             when {
-                // expression { params.deployPROD == 'yes' };
-
                 anyOf {
                     expression { params.deployPROD == 'yes' };
                     expression { 
-                      return env.BRANCH_NAME == "release/*"
+                      return ${BRANCH_NAME} == "release/*"
                     }
                 }
             }
