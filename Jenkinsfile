@@ -64,7 +64,7 @@ pipeline {
             when {
                 anyOf {
                     expression { params.deployPROD == 'yes' };
-                    expression {  if ( params.branchName ==~ 'release') } 
+                    expression { branch pattern: "release/\\d+", comparator: "REGEXP") } 
                 }
             }
             steps {
