@@ -54,10 +54,6 @@ pipeline {
             }
             steps {
                 echo 'deploy to QA'
-                echo "Branch name is: ${branch}"
-                echo "{BUILD_NUMBER}: ${BUILD_NUMBER}"
-                echo "BUILD_NUMBER: ${BUILD_NUMBER}"
-                echo "BRANCH_NAME: ${BRANCH_NAME}"
             }
         }
         stage('Deploy - PROD') {
