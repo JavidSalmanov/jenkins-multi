@@ -4,7 +4,6 @@ pipeline {
     }
     parameters {
         string(name: 'version', defaultValue: "${currentBuild.number}", description: 'Docker version to deploy')
-        string(name: 'branchName', defaultValue: "${BRANCH_NAME}", description: 'Branch name')
         choice(
             choices: ['yes', 'no'],
             description: 'Build app and docker image',
