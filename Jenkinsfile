@@ -35,6 +35,7 @@ pipeline {
             }
             steps {
                 echo 'Build image'
+                echo "TAG_NAME: ${env.GIT_TAG_NAME}"
                 }
             }
 
