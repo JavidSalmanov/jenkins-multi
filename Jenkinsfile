@@ -1,4 +1,4 @@
-def p = ~/release.*/
+// def p = ~/release.*/
 pipeline {
     agent {
         label ''
@@ -62,7 +62,7 @@ pipeline {
             when {
                 anyOf {
                     expression { params.deployPROD == 'yes' };
-                    expression { "${p}" =~ params.branchName }
+                    expression {params.branchName == 'release/*'}
                 }
             }
             steps {
