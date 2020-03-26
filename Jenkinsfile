@@ -1,4 +1,3 @@
-// def p = ~/release.*/
 pipeline {
     agent {
         label ''
@@ -20,15 +19,6 @@ pipeline {
             name: 'deployPROD')
     }
     stages {
-
-        // stage('Source') {
-        //     when {
-        //         expression { params.build == 'yes' }
-        //     }
-        //     steps {
-        //         echo 'Get repo'
-        //     }
-        // }
         
         stage('Build') {
             when {
