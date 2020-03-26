@@ -55,12 +55,13 @@ pipeline {
             }
             steps {
                 echo 'deploy to QA'
+                echo "Branch name is: $branch"
             }
         }
         stage('Deploy - PROD') {
 
             when { 
-                expression { branch == "release/*"} 
+                expression { $branch == "release/*"} 
             }
             // when {
             //     env.BRANCH_NAME == "release/*"
