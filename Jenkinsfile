@@ -1,4 +1,5 @@
 //comment
+def branch = env.BRANCH_NAME
 pipeline {
     agent {
         label ''
@@ -58,7 +59,7 @@ pipeline {
         }
         stage('Deploy - PROD') {
 
-            when { branch "origin/release/*" }
+            when { branch == "release/*" }
             // when {
             //     env.BRANCH_NAME == "release/*"
             //     anyOf {
