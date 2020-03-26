@@ -58,7 +58,7 @@ pipeline {
         }
         stage('Deploy - PROD') {
 
-            when { env.BRANCH_NAME == "release/*" }
+            when { branch "origin/release/*" }
             // when {
             //     env.BRANCH_NAME == "release/*"
             //     anyOf {
