@@ -64,7 +64,7 @@ pipeline {
             when {
                 anyOf {
                     expression { params.deployPROD == 'yes' };
-                    expression { params.branchName ==~ 'release/' } 
+                    expression {  if ( params.branchName ==~ 'release') } 
                 }
             }
             steps {
