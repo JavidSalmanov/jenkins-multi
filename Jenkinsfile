@@ -1,4 +1,3 @@
-def dockerImageName = "${dockerRepo}/scorecard/service"
 pipeline {
     environment {
         registry = "javidsa/sc"
@@ -42,12 +41,10 @@ pipeline {
             steps {
                 echo 'Build image'
                 echo "TAG_NAME: ${env.GIT_TAG_NAME}"
-                step{
-                    dockerImage = docker build -t "${registry}:${params.version}" --build-arg "version=${params.version}" .
-                    docker.withRegistry( '', registryCredential ) {
-                    dockerImage.push()
-                }
 
+                withDockerRegistry( credentialsId: 'docker-hub', url: 'https://hub.docker.com' ) {
+                    sh "docker build -t '${registry}:${params.version}' --build-arg version='${params.version}' ."
+                    sh "docker push '${registry}:${params.version}'"
                 }
             }
         }
