@@ -1,4 +1,10 @@
+def dockerImageName = "${dockerRepo}/scorecard/service"
 pipeline {
+    environment {
+        registry = "javidsa/sc"
+        registryCredential = 'docker-hub'
+        dockerImage = ''
+    }
     agent {
         label ''
     }
@@ -36,6 +42,10 @@ pipeline {
             steps {
                 echo 'Build image'
                 echo "TAG_NAME: ${env.GIT_TAG_NAME}"
+                dockerImage = docker build -t registry +":${params.version}" --build-arg "version=${params.version}" .
+                docker.withRegistry( '', registryCredential ) {
+                dockerImage.push()
+
                 }
             }
 
@@ -43,12 +53,16 @@ pipeline {
             when {
                 anyOf {
                     expression { params.deployQA == 'yes' }
-                    expression {  "${env.GIT_TAG_NAME}".contains('1') };
                 }
             }
             steps {
                 echo 'deploy to QA'
                 echo "BRANCH_NAME var: ${BRANCH_NAME}"
+                sh '''
+                    dokcer container rm -f web-qa
+                    docker container run -d --name web-qa--publish 81:80 registry + ":${params.version}"
+                '''
+
             }
         }
         stage('Deploy - PROD') {
@@ -65,7 +79,11 @@ pipeline {
                 }
                 echo 'Production!!!'
                 echo 'deploy to PROD'
-                echo "${params.version}"
+                sh '''
+                    dokcer container rm -f web-prod
+                    docker container run -d --name web-prod --publish 82:80 registry + ":${params.version}"
+                '''
+                echo "version: ${params.version}"
                 slackSend channel: '#jenkins', message: "Deployment sc:${BUILD_NUMBER} docker image to PROD is ${currentBuild.currentResult}"
             }
         }
