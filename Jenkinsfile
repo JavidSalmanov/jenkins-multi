@@ -36,7 +36,7 @@ pipeline {
             }
             steps {
                 echo 'Build image'
-                withDockerRegistry( credentialsId: 'docker-hub', '') {
+                withDockerRegistry( credentialsId: 'docker-hub', url: 'https://hub.docker.com') {
                     sh "docker build -t '${registry}:${params.version}' --build-arg version='${params.version}' ."
                     sh "docker push '${registry}:${params.version}'"
                 }
