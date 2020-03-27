@@ -46,6 +46,7 @@ pipeline {
             steps {
                 echo 'deploy to QA'
                 echo "BRANCH_NAME var: ${BRANCH_NAME}"
+                echo "Docker image scorecard:${params.version} deployed to QA"
             }
         }
         stage('Deploy - PROD') {
@@ -62,7 +63,7 @@ pipeline {
                 }
                 echo 'Production!!!'
                 echo 'deploy to PROD'
-                echo "version: ${params.version}"
+                echo "Docker image scorecard:${params.version} deployed to PROD"
                 slackSend channel: '#jenkins', message: "Deployment sc:${BUILD_NUMBER} docker image to PROD is ${currentBuild.currentResult}"
             }
         }
