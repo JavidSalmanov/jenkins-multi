@@ -63,6 +63,7 @@ pipeline {
                 }
                 echo 'Production!!!'
                 echo 'deploy to PROD'
+                echo "BUILD_USER: $BUILD_USER"
                 echo "Docker image scorecard:${params.version} deployed to PROD"
                 slackSend channel: '#jenkins', message: "Deployment sc:${BUILD_NUMBER} docker image to PROD is ${currentBuild.currentResult}"
             }
