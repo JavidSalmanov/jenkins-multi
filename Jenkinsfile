@@ -64,6 +64,7 @@ pipeline {
                 echo 'Production!!!'
                 echo 'deploy to PROD'
                 echo "${params.version}"
+                slackSend(color: 'good', message: " ${BRANCH_NAME} branch is in PROD")
             }
         }
     }
