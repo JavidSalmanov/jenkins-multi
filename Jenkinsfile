@@ -1,4 +1,4 @@
-def slackResponse = slackSend(channel: "ci", message: "Started build")
+def slackResponse = slackSend(channel: "jenkins", message: "Started build")
 slackSend(channel: slackResponse.threadId, message: "Build still in progress")
 pipeline {
     agent {
