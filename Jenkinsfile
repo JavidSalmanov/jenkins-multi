@@ -42,9 +42,11 @@ pipeline {
             steps {
                 echo 'Build image'
                 echo "TAG_NAME: ${env.GIT_TAG_NAME}"
-                dockerImage = docker build -t "${registry}:${params.version}" --build-arg "version=${params.version}" .
-                docker.withRegistry( '', registryCredential ) {
-                dockerImage.push()
+                step{
+                    dockerImage = docker build -t "${registry}:${params.version}" --build-arg "version=${params.version}" .
+                    docker.withRegistry( '', registryCredential ) {
+                    dockerImage.push()
+                }
 
                 }
             }
