@@ -37,7 +37,7 @@ pipeline {
             steps {
                 echo 'Build image'
                 script {
-                    docker.build registry + "${params.version}"
+                    docker.build registry + ":${params.version}"
                 }
                 echo "Push the image to hub"
                 withDockerRegistry(credentialsId: 'docker-hub', url: 'https://hub.docker.com') {
