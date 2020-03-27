@@ -66,7 +66,7 @@ pipeline {
                 echo 'Production!!!'
                 echo 'deploy to PROD'
                 echo "${params.version}"
-                slackSend channel: '#jenkins', message: "${BUILD_NUMBER} taged docker is deployed to PROD"
+                slackSend channel: '#jenkins', message: "sc:${BUILD_NUMBER} docker image is deployed to PROD"
             }
         }
     }
