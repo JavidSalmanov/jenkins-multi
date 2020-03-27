@@ -1,7 +1,7 @@
 def registry = 'javidsa/sc'
 pipeline {
     agent {
-        label 'docker'
+        label ''
     }
     parameters {
         string(name: 'version', defaultValue: "${currentBuild.number}", description: 'Docker version to deploy')
