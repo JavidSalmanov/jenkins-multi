@@ -1,9 +1,5 @@
+def registry = 'javidsa/sc'
 pipeline {
-    environment {
-        registry = "javidsa/sc"
-        registryCredential = 'docker-hub'
-        dockerImage = ''
-    }
     agent {
         label ''
     }
@@ -40,9 +36,7 @@ pipeline {
             }
             steps {
                 echo 'Build image'
-                echo "TAG_NAME: ${env.GIT_TAG_NAME}"
-
-                withDockerRegistry( credentialsId: 'docker-hub', url: 'https://hub.docker.com' ) {
+                withDockerRegistry( credentialsId: 'docker-hub', '') {
                     sh "docker build -t '${registry}:${params.version}' --build-arg version='${params.version}' ."
                     sh "docker push '${registry}:${params.version}'"
                 }
