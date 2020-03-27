@@ -1,4 +1,3 @@
-def registry = 'javidsa/sc'
 pipeline {
     agent {
         label ''
@@ -36,13 +35,6 @@ pipeline {
             }
             steps {
                 echo 'Build image'
-                script {
-                    docker.build registry + ":${params.version}"
-                }
-                echo "Push the image to hub"
-                withDockerRegistry(credentialsId: 'docker-hub', url: 'https://hub.docker.com') {
-                    sh "docker push '${registry}:${params.version}'"
-                }
             }
         }
         stage('Deploy - QA') {
@@ -54,11 +46,6 @@ pipeline {
             steps {
                 echo 'deploy to QA'
                 echo "BRANCH_NAME var: ${BRANCH_NAME}"
-                sh '''
-                    dokcer container rm -f web-qa
-                    docker container run -d --name web-qa--publish 81:80 "${registry}:${params.version}"
-                '''
-
             }
         }
         stage('Deploy - PROD') {
@@ -75,10 +62,6 @@ pipeline {
                 }
                 echo 'Production!!!'
                 echo 'deploy to PROD'
-                sh '''
-                    dokcer container rm -f web-prod
-                    docker container run -d --name web-prod --publish 82:80 "${registry}:${params.version}"
-                '''
                 echo "version: ${params.version}"
                 slackSend channel: '#jenkins', message: "Deployment sc:${BUILD_NUMBER} docker image to PROD is ${currentBuild.currentResult}"
             }
