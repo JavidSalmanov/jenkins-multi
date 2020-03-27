@@ -62,7 +62,10 @@ pipeline {
                     input message: 'Approve Deploy?', ok: 'Accept'
                 }
                 echo 'Production!!!'
-                echo 'deploy to PROD'
+                echo 'Deploying to PROD'
+                echo "Stop docker container"
+                echo "Create DB dump"
+                echo "Run run.sh script"
                 echo "Docker image scorecard:${params.version} deployed to PROD"
                 slackSend channel: '#jenkins', message: "Deployment sc:${BUILD_NUMBER} docker image to PROD is ${currentBuild.currentResult}"
             }
