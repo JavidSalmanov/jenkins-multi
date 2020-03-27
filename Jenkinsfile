@@ -42,7 +42,7 @@ pipeline {
             steps {
                 echo 'Build image'
                 echo "TAG_NAME: ${env.GIT_TAG_NAME}"
-                dockerImage = docker build -t registry +":${params.version}" --build-arg "version=${params.version}" .
+                dockerImage = docker build -t "${registry}:${params.version}" --build-arg "version=${params.version}" .
                 docker.withRegistry( '', registryCredential ) {
                 dockerImage.push()
 
@@ -60,7 +60,7 @@ pipeline {
                 echo "BRANCH_NAME var: ${BRANCH_NAME}"
                 sh '''
                     dokcer container rm -f web-qa
-                    docker container run -d --name web-qa--publish 81:80 registry + ":${params.version}"
+                    docker container run -d --name web-qa--publish 81:80 "${registry}:${params.version}"
                 '''
 
             }
@@ -81,7 +81,7 @@ pipeline {
                 echo 'deploy to PROD'
                 sh '''
                     dokcer container rm -f web-prod
-                    docker container run -d --name web-prod --publish 82:80 registry + ":${params.version}"
+                    docker container run -d --name web-prod --publish 82:80 "${registry}:${params.version}"
                 '''
                 echo "version: ${params.version}"
                 slackSend channel: '#jenkins', message: "Deployment sc:${BUILD_NUMBER} docker image to PROD is ${currentBuild.currentResult}"
