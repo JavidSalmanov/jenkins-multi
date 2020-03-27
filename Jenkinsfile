@@ -1,5 +1,3 @@
-def slackResponse = slackSend(channel: "jenkins", message: "Started build")
-slackSend(channel: slackResponse.threadId, message: "Build still in progress")
 pipeline {
     agent {
         label ''
@@ -66,11 +64,7 @@ pipeline {
                 echo 'Production!!!'
                 echo 'deploy to PROD'
                 echo "${params.version}"
-                slackSend(
-                    channel: slackResponse.threadId,
-                    replyBroadcast: true,
-                    message: "Build failed. Broadcast to channel for better visibility."
-                )
+                slackSend channel: '#jenkins', message: "${BUILD_NUMBER} taged docker is deployed to PROD"
             }
         }
     }
