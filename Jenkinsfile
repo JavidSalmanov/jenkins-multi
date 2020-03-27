@@ -58,7 +58,7 @@ pipeline {
             }
             steps {
                 timeout(time: 2, unit: "MINUTES") {
-                    input message: 'Approve Deploy?', ok: 'Yes'
+                    input message: 'Approve Deploy?', ok: 'Accept'
                 }
                 echo 'Production!!!'
                 echo 'deploy to PROD'
