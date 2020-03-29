@@ -54,7 +54,7 @@ pipeline {
             when {
                 anyOf {
                     expression { params.deployPROD == 'yes' };
-                    expression { "${BRANCH_NAME}".startsWith('release/') }
+                    // expression { "${BRANCH_NAME}".startsWith('release/') }
                 }
             }
             steps {
