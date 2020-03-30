@@ -2,6 +2,10 @@ pipeline {
     agent {
         label ''
     }
+        environment {
+        PGAPSSWORD=credentials('sc-pass')
+
+    }
     parameters {
         string(name: 'version', defaultValue: "${currentBuild.number}", description: 'Docker version to deploy')
         choice(
@@ -35,6 +39,7 @@ pipeline {
             }
             steps {
                 echo 'Build image'
+                echo "PGAPSSWORD: $PGAPSSWORD"
             }
         }
         stage('Deploy - QA') {
