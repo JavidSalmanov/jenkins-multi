@@ -75,8 +75,7 @@ pipeline {
                 echo "Create DB dump"
                 echo "Run run.sh script"
                 echo "Docker image scorecard:${params.version} deployed to PROD"
-                slackSend channel: '#jenkins', message: """
-                    BUILD_NUMBER: ${params.version} 
+                slackSend channel: '#jenkins', color: '#BADA55', message: """BUILD_NUMBER: ${params.version} 
                 GIT_COMMIT: ${GIT_COMMIT}
                 ENVIRONMENT: PROD
                 DEPLOYMENT_STATUS: ${currentBuild.currentResult}
