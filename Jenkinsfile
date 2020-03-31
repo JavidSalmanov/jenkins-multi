@@ -2,7 +2,7 @@ pipeline {
     agent {
         label ''
     }
-        environment {
+    environment {
         PGAPSSWORD=credentials('sc-pass')
 
     }
@@ -24,6 +24,9 @@ pipeline {
     stages {
         
         stage('Build') {
+            agent { 
+                label ''
+            }
             when {
                 expression { params.build == 'yes' }
             }
@@ -72,7 +75,12 @@ pipeline {
                 echo "Create DB dump"
                 echo "Run run.sh script"
                 echo "Docker image scorecard:${params.version} deployed to PROD"
-                slackSend channel: '#jenkins', message: "Deployment sc:${BUILD_NUMBER} docker image to PROD is ${currentBuild.currentResult}"
+                slackSend channel: '#jenkins', message: """
+                    GIT_AUTHOR_NAME: ${GIT_AUTHOR_NAME}
+                    GIT_COMMIT: ${GIT_COMMIT}
+                    ENVIRONMENT: PROD
+                    DEPLOYMENT_STATUS: ${currentBuild.currentResult}
+                """
             }
         }
     }
