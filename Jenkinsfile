@@ -76,7 +76,7 @@ pipeline {
                 echo "Run run.sh script"
                 echo "Docker image scorecard:${params.version} deployed to PROD"
                 slackSend channel: '#jenkins', message: """
-                BUILD_NUMBER: ${params.version} 
+                    BUILD_NUMBER: ${params.version} 
                 GIT_COMMIT: ${GIT_COMMIT}
                 ENVIRONMENT: PROD
                 DEPLOYMENT_STATUS: ${currentBuild.currentResult}
