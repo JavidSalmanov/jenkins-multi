@@ -33,8 +33,14 @@ pipeline {
             steps {
                 echo 'build app'
                 script{
-                    app_version = sh(script: "ls scorecard-service-*.jar |cut -d '-' -f 3 | cut -d '.' -f 1-3 ", returnStdout: true)
-                    echo "app_version: $app_version" 
+                    releaseVersion = sh(script: "ls scorecard-service-*.jar |cut -d '-' -f 3 | cut -d '.' -f 1-3 ", returnStdout: true)
+                    if ("${BRANCH_NAME}".startsWith('release/')) {
+                        script { NEW_TAG=sh(returnStdout: true, script: 'release-${releaseVersion}') }
+                    } else {
+                        script { NEW_TAG=sh(returnStdout: true, script: 'build-${releaseVersion}') }
+                    }
+                    echo "app_version: $app_version"
+                    echo "NEW_TAG: $NEW_TAG" 
                 }
             }
         }
@@ -58,7 +64,7 @@ pipeline {
                 echo 'deploy to QA'
                 echo "BRANCH_NAME var: ${BRANCH_NAME}"
                 echo "Docker image scorecard:${params.version} deployed to QA"
-                echo "app_version: $app_version" 
+                echo "releaseVersion: $releaseVersion" 
 
             }
         }
