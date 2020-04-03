@@ -39,9 +39,9 @@ pipeline {
                     } else {
                         NEW_TAG = sh(script: "build-${releaseVersion}", returnStdout: true)
                     }
-                    echo "releaseVersion: $releaseVersion"
-                    echo "NEW_TAG: $NEW_TAG" 
                 }
+                echo "releaseVersion: $releaseVersion"
+                echo "NEW_TAG: $NEW_TAG" 
             }
         }
         
