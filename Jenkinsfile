@@ -37,9 +37,8 @@ pipeline {
                     releaseVersion = sh(script: "ls scorecard-service-*.jar |cut -d '-' -f 3 | cut -d '.' -f 1-3 ", returnStdout: true)
                     if ("${BRANCH_NAME}".startsWith('release/')) {
                         NEW_TAG = sh(script: "echo release-${releaseVersion}", returnStdout: true)
-                        NEW_TAG = sh(script: "echo release-${releaseVersion}", returnStdout: true)
                     } else {
-                        NEW_TAG = sh(script: "build-${releaseVersion}", returnStdout: true)
+                        NEW_TAG = sh(script: "echo build-${releaseVersion}", returnStdout: true)
                     }
                 }
                 echo "releaseVersion: $releaseVersion"
