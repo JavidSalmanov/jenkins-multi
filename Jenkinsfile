@@ -58,6 +58,8 @@ pipeline {
                 echo 'deploy to QA'
                 echo "BRANCH_NAME var: ${BRANCH_NAME}"
                 echo "Docker image scorecard:${params.version} deployed to QA"
+                echo "app_version: $app_version" 
+
             }
         }
         stage('Deploy - PROD') {
