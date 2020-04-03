@@ -66,10 +66,9 @@ pipeline {
                 script{
                     if ("${BRANCH_NAME}".startsWith('release/')) {
                         RELEASE_TAG = sh(script: "echo release-${releaseVersion}", returnStdout: true)
-                        RELEASE_TAG = sh(script: "echo release-${releaseVersion}", returnStdout: true)
                     } 
                     else {
-                        RELEASE_TAG = sh(script: "build-${releaseVersion}", returnStdout: true)
+                        RELEASE_TAG = sh(script: "echo build-${releaseVersion}", returnStdout: true)
                     }
                 }
                 echo 'deploy to QA'
