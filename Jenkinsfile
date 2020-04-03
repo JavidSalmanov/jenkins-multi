@@ -7,6 +7,7 @@ pipeline {
 
     }
     parameters {
+        string(name: 'releaseVersion', defaultValue: "${currentBuild.number}", description: 'App version to deploy')
         string(name: 'version', defaultValue: "${currentBuild.number}", description: 'Docker version to deploy')
         choice(
             choices: ['yes', 'no'],
@@ -61,7 +62,17 @@ pipeline {
                     expression { params.deployQA == 'yes' }
                 }
             }
+              
             steps {
+                script{
+                    if ("${BRANCH_NAME}".startsWith('release/')) {
+                        RELEASE_TAG = sh(script: "echo release-${releaseVersion}", returnStdout: true)
+                        RELEASE_TAG = sh(script: "echo release-${releaseVersion}", returnStdout: true)
+                    } 
+                    else {
+                        RELEASE_TAG = sh(script: "build-${releaseVersion}", returnStdout: true)
+                    }
+                }
                 echo 'deploy to QA'
                 echo "BRANCH_NAME var: ${BRANCH_NAME}"
                 echo "Docker image scorecard:${params.version} deployed to QA"
@@ -72,9 +83,9 @@ pipeline {
         stage('Deploy - PROD') {
   
             when {
-                anyOf {
+                allOf {
                     expression { params.deployPROD == 'yes' };
-                    // expression { "${BRANCH_NAME}".startsWith('release/') }
+                    expression { "${BRANCH_NAME}".startsWith('release/') }
                 }
             }
             steps {
@@ -86,7 +97,7 @@ pipeline {
                 echo "Stop docker container"
                 echo "Create DB dump"
                 echo "Run run.sh script"
-                echo "Docker image scorecard:${params.version} deployed to PROD"
+                echo "Docker image scorecard:release-${releaseVersion}-${params.version} deployed to PROD"
                 slackSend channel: '#jenkins', color: '#BADA55', message: """BUILD_NUMBER: ${params.version} 
                 GIT_COMMIT: ${GIT_COMMIT}
                 ENVIRONMENT: PROD
