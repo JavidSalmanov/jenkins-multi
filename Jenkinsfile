@@ -73,7 +73,7 @@ pipeline {
                 }
                 echo 'deploy to QA'
                 echo "BRANCH_NAME var: ${BRANCH_NAME}"
-                echo "Docker image 'scorecard:${RELEASE_TAG}-${params.version}' deployed to QA"
+                echo "Docker 'scorecard:${RELEASE_TAG}-${params.version}' deployed to QA"
                 echo "releaseVersion: $releaseVersion" 
 
             }
