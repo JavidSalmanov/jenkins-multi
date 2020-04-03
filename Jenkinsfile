@@ -35,8 +35,8 @@ pipeline {
                 echo 'build app'
                 println registry[0]  
                 script{
-                app_version = sh(script: "ls scorecard-service-*.jar |cut -d '-' -f 3 | cut -d '.' -f 1-3 ", returnStdout: true)
-                echo "app_version: $app_version" 
+                    app_version = sh(script: "ls scorecard-service-*.jar |cut -d '-' -f 3 | cut -d '.' -f 1-3 ", returnStdout: true)
+                    echo "app_version: $app_version" 
                 }
             }
         }
