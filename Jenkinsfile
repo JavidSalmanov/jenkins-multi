@@ -1,5 +1,3 @@
-def sReg = "\$(ls scorecard-service-*.jar)"
-def registry = sReg =~ "(scorecard-service-)(.*)(\\.jar)"
 println registry[0]    
 pipeline {
     agent {
@@ -36,8 +34,9 @@ pipeline {
             steps {
                 echo 'build app'
                 println registry[0]  
-                // app_version = sh(script: "ls ; \"(scorecard-service-)(.*)(\.jar)\"", returnStdout: true)
-                
+                script{
+                app_version = sh(script: "\"\$(ls scorecard-service-*.jar |cut -d \'-\' -f 3 | cut -d \'.\' -f 1-3)\"", returnStdout: true)
+                }
             }
         }
         
