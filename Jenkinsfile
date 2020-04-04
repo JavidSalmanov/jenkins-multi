@@ -68,7 +68,7 @@ pipeline {
                         RELEASE_TAG = sh(script: "echo release-${releaseVersion}", returnStdout: true)
                     } 
                     else {
-                        RELEASE_TAG = sh(script: "echo build-${releaseVersion}", returnStdout: true)
+                        RELEASE_TAG = sh(script: "echo build-${releaseVersion}-${currentBuild.number}", returnStdout: true)
                     }
                 }
                 echo 'deploy to QA'
