@@ -73,7 +73,7 @@ pipeline {
                 }
                 echo 'deploy to QA'
                 echo "BRANCH_NAME var: ${BRANCH_NAME}"
-                echo "'scorecard:${RELEASE_TAG}\-${params.version}' deployed to QA"
+                echo "'scorecard:${RELEASE_TAG} ${params.version}' deployed to QA"
                 echo "scorecard:${RELEASE_TAG}_${params.version} deployed to QA"
                 echo "scorecard:${RELEASE_TAG}'-'${params.version} deployed to QA"
                 echo "scorecard:${RELEASE_TAG}:${params.version} deployed to QA"
