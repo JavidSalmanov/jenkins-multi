@@ -74,7 +74,7 @@ pipeline {
                     else {
                         RELEASE_TAG = sh(script: "echo build-${releaseVersion}", returnStdout: true).trim()
                     }
-                    if (${params.version} != null ) {
+                    if ("${params.version}" != null ) {
                         version = sh(script: "echo ${params.version}", returnStdout: true).trim()
                         echo "version: $version"
                     }
@@ -103,7 +103,7 @@ pipeline {
                     input message: 'Approve Deploy?', ok: 'Accept'
                 }
                 script{
-                    if (${params.version} != null ) {
+                    if ("${params.version}" != null ) {
                         version = sh(script: "echo ${params.version}", returnStdout: true).trim()
                         echo "version: $version"
                     }
