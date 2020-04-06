@@ -7,8 +7,8 @@ pipeline {
 
     }
     parameters {
-        string(name: 'releaseVersion', defaultValue: "${currentBuild.number}", description: 'App version to deploy')
-        string(name: 'version', defaultValue: "${currentBuild.number}", description: 'Docker version to deploy')
+        string(name: 'version', description: 'App version to deploy')
+        string(name: 'releaseVersion', defaultValue: "${currentBuild.number}", description: 'Docker version to deploy')
         choice(
             choices: ['yes', 'no'],
             description: 'Build app and docker image',
@@ -37,6 +37,7 @@ pipeline {
                     input message: 'Approve Deploy?', ok: 'Accept'
                 }
                 script{
+                    version = sh(script: "echo release-${currentBuild.number}", returnStdout: true).trim()
                     releaseVersion = sh(script: "ls scorecard-service-*.jar |cut -d '-' -f 3 | cut -d '.' -f 1-3 ", returnStdout: true)
                     if ("${BRANCH_NAME}".startsWith('release/')) {
                         NEW_TAG = sh(script: "echo release-${releaseVersion}", returnStdout: true).trim()
@@ -73,10 +74,18 @@ pipeline {
                     else {
                         RELEASE_TAG = sh(script: "echo build-${releaseVersion}", returnStdout: true).trim()
                     }
+                    if (${params.version} != null ) {
+                        version = sh(script: "echo ${params.version}", returnStdout: true).trim()
+                        echo "version: $version"
+                    }
+                    else
+                    {
+                        version = sh(script: "echo ${currentBuild.number}", returnStdout: true).trim()
+                    }
                 }
                 echo 'deploy to QA'
                 echo "BRANCH_NAME var: ${BRANCH_NAME}"
-                echo "'scorecard:${RELEASE_TAG}-${params.version}' deployed to QA"
+                echo "'scorecard:${RELEASE_TAG}-${version}' deployed to QA"
                 echo "releaseVersion: $releaseVersion" 
 
             }
@@ -93,13 +102,25 @@ pipeline {
                 timeout(time: 2, unit: "MINUTES") {
                     input message: 'Approve Deploy?', ok: 'Accept'
                 }
+                script{
+                    if (${params.version} != null ) {
+                        version = sh(script: "echo ${params.version}", returnStdout: true).trim()
+                        echo "version: $version"
+                    }
+                    else
+                    {
+                        version = sh(script: "echo ${currentBuild.number}", returnStdout: true).trim()
+                        echo "version: $version"
+                    }
+                }
+
                 echo 'Production!!!'
                 echo 'Deploying to PROD'
                 echo "Stop docker container"
                 echo "Create DB dump"
                 echo "Run run.sh script"
                 echo "Docker image scorecard:release-${releaseVersion}-${params.version} deployed to PROD"
-                slackSend channel: '#jenkins', color: '#BADA55', message: """BUILD_NUMBER: ${params.version} 
+                slackSend channel: '#jenkins', color: '#BADA55', message: """BUILD_NUMBER: ${version} 
                 GIT_COMMIT: ${GIT_COMMIT}
                 ENVIRONMENT: PROD
                 DEPLOYMENT_STATUS: ${currentBuild.currentResult}
