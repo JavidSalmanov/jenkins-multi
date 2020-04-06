@@ -7,7 +7,7 @@ pipeline {
 
     }
     parameters {
-        string(name: 'version', defaultValue: null, description: 'App version to deploy')
+        string(name: 'version', defaultValue: "0", description: 'App version to deploy')
         string(name: 'releaseVersion', defaultValue: "${currentBuild.number}", description: 'Docker version to deploy')
         choice(
             choices: ['yes', 'no'],
@@ -104,13 +104,13 @@ pipeline {
                     input message: 'Approve Deploy?', ok: 'Accept'
                 }
                 script{
-                    if ("${params.version}" != null && !"${params.version}".isEmpty()) {
-                        version = sh(script: "echo ${params.version}", returnStdout: true).trim()
-                        echo "version: $version"
+                    if ("${params.version}" == "0") {
+                        version = sh(script: "echo ${currentBuild.number}", returnStdout: true).trim()
+                        echo "version: $version"                      
                     }
                     else
                     {
-                        version = sh(script: "echo ${currentBuild.number}", returnStdout: true).trim()
+                        version = sh(script: "echo ${params.version}", returnStdout: true).trim()
                         echo "version: $version"
                     }
                 }
