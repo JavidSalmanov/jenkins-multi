@@ -114,7 +114,6 @@ pipeline {
                         echo "version: $version"
                     }
                 }
-
                 echo 'Production!!!'
                 echo 'Deploying to PROD'
                 echo "Stop docker container"
