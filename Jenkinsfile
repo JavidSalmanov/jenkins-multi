@@ -7,7 +7,7 @@ pipeline {
 
     }
     parameters {
-        string(name: 'version', description: 'App version to deploy')
+        string(name: 'version', defaultValue: "", description: 'App version to deploy')
         string(name: 'releaseVersion', defaultValue: "${currentBuild.number}", description: 'Docker version to deploy')
         choice(
             choices: ['yes', 'no'],
