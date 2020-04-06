@@ -104,7 +104,7 @@ pipeline {
                     input message: 'Approve Deploy?', ok: 'Accept'
                 }
                 script{
-                    if ("${params.version}" != null ) {
+                    if ("${params.version}" != null && !"${params.version}".isEmpty()) {
                         version = sh(script: "echo ${params.version}", returnStdout: true).trim()
                         echo "version: $version"
                     }
