@@ -81,6 +81,7 @@ pipeline {
                     else
                     {
                         version = sh(script: "echo ${currentBuild.number}", returnStdout: true).trim()
+                        echo "version: $version"
                     }
                 }
                 echo 'deploy to QA'
