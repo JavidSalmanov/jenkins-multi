@@ -74,19 +74,19 @@ pipeline {
                     else {
                         RELEASE_TAG = sh(script: "echo build-${releaseVersion}", returnStdout: true).trim()
                     }
-                    if ("${params.version}" != null ) {
-                        version = sh(script: "echo ${params.version}", returnStdout: true).trim()
-                        echo "version: $version"
+                    if ("${params.version}") {
+                        version1 = sh(script: "echo ${currentBuild.number}", returnStdout: true).trim()
+                        echo "version: $version1"
                     }
                     else
                     {
-                        version = sh(script: "echo ${currentBuild.number}", returnStdout: true).trim()
-                        echo "version: $version"
+                        version1 = sh(script: "echo ${params.version}", returnStdout: true).trim()
+                        echo "version: $version1"
                     }
                 }
                 echo 'deploy to QA'
                 echo "BRANCH_NAME var: ${BRANCH_NAME}"
-                echo "'scorecard:${RELEASE_TAG}-${version}' deployed to QA"
+                echo "'scorecard:${RELEASE_TAG}-${version1}' deployed to QA"
                 echo "releaseVersion: $releaseVersion" 
 
             }
