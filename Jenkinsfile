@@ -33,6 +33,9 @@ pipeline {
             }
             steps {
                 echo 'build app'
+                timeout(time: 2, unit: "MINUTES") {
+                    input message: 'Approve Deploy?', ok: 'Accept'
+                }
                 script{
                     releaseVersion = sh(script: "ls scorecard-service-*.jar |cut -d '-' -f 3 | cut -d '.' -f 1-3 ", returnStdout: true)
                     if ("${BRANCH_NAME}".startsWith('release/')) {
