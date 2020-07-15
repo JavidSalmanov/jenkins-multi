@@ -1,7 +1,8 @@
-if (currentBuild.getCauses().toString().contains('BranchIndexingCause')) {
+if (currentBuild.rawBuild.getCauses().toString().contains('BranchIndexingCause')) {
   print "INFO: Build skipped due to trigger being Branch Indexing"
   return
 }
+
 pipeline {
     agent {
         label ''
